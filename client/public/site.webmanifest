@@ -1,0 +1,21 @@
+{
+  "name": "Online MCP Inspector - Free Model Context Protocol Testing Tool",
+  "short_name": "Online MCP Inspector",
+  "description": "Free online tool for testing and debugging Model Context Protocol (MCP) servers. No installation required.",
+  "icons": [
+    {
+      "src": "/mcp.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["developer", "utilities", "productivity"],
+  "lang": "en",
+  "scope": "/"
+}

@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://onlinemcpinspector.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Block access to source maps and other development files
+Disallow: /*.map$
+Disallow: /node_modules/
+Disallow: /.git/

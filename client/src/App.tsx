@@ -22,6 +22,10 @@ import { SESSION_KEYS, getServerSpecificKey } from "./lib/constants";
 import { AuthDebuggerState, EMPTY_DEBUGGER_STATE } from "./lib/auth-types";
 import { OAuthStateMachine } from "./lib/oauth-state-machine";
 import { cacheToolOutputSchemas } from "./utils/schemaUtils";
+// SEO and Analytics imports
+import SEOHead from "./components/SEOHead";
+import { GoogleAds } from "./components/Analytics";
+import PerformanceOptimizer from "./components/PerformanceOptimizer";
 import React, {
   Suspense,
   useCallback,
@@ -622,7 +626,15 @@ const App = () => {
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <>
+      {/* SEO and Performance Components */}
+      <SEOHead />
+      <PerformanceOptimizer />
+      
+      {/* Google AdSense Script */}
+      <GoogleAds adClientId="ca-pub-5649332072305685" />
+      
+      <div className="flex h-screen bg-background">
       <div
         style={{
           width: sidebarWidth,
@@ -939,6 +951,7 @@ const App = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

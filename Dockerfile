@@ -41,9 +41,15 @@ COPY --from=builder /app/client/bin ./client/bin
 COPY --from=builder /app/server/build ./server/build
 COPY --from=builder /app/cli/build ./cli/build
 
+# Copy SEO static files (robots.txt, sitemap.xml, etc.)
+COPY --from=builder /app/client/public ./client/public
+
 # Set default port values as environment variables
 ENV CLIENT_PORT=6274
 ENV SERVER_PORT=6277
+
+# Set production environment for analytics
+ENV NODE_ENV=production
 
 # Document which ports the application uses internally
 EXPOSE ${CLIENT_PORT} ${SERVER_PORT}

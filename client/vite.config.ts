@@ -20,5 +20,11 @@ export default defineConfig({
         manualChunks: undefined,
       },
     },
+    // Generate source maps for better debugging but exclude from production
+    sourcemap: false,
+  },
+  // SEO and performance optimizations
+  optimizeDeps: {
+    include: ["react", "react-dom"],
   },
 });
