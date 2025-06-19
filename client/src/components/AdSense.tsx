@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
@@ -19,9 +19,16 @@ export function AdSenseAd({
   style = {},
   className = "",
 }: AdSenseAdProps) {
+  const adInitialized = useRef(false);
+
   useEffect(() => {
     // Only load ads in production
     if (process.env.NODE_ENV !== "production") {
+      return;
+    }
+
+    // Prevent double initialization in React 18 StrictMode
+    if (adInitialized.current) {
       return;
     }
 
@@ -29,6 +36,7 @@ export function AdSenseAd({
       // Push ad to AdSense queue
       if (window.adsbygoogle) {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
+        adInitialized.current = true;
       }
     } catch (error) {
       console.error("AdSense error:", error);
