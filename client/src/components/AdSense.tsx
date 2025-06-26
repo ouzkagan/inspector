@@ -73,7 +73,7 @@ export function AdSenseAd({
 export function SidebarAd() {
   return (
     <AdSenseAd
-      adSlot="YOUR_AD_SLOT_ID" // Get this from AdSense dashboard after creating ad unit
+      adSlot="1234567890" // Get this from AdSense dashboard after creating ad unit
       adFormat="vertical"
       style={{ width: "300px", height: "250px" }}
       className="my-4"
@@ -84,7 +84,7 @@ export function SidebarAd() {
 export function HeaderAd() {
   return (
     <AdSenseAd
-      adSlot="YOUR_AD_SLOT_ID" // Get this from AdSense dashboard
+      adSlot="0987654321" // Get this from AdSense dashboard
       adFormat="horizontal"
       style={{ width: "728px", height: "90px" }}
       className="mx-auto my-2"
@@ -95,7 +95,7 @@ export function HeaderAd() {
 export function ContentAd() {
   return (
     <AdSenseAd
-      adSlot="YOUR_AD_SLOT_ID" // Get this from AdSense dashboard
+      adSlot="1122334455" // Get this from AdSense dashboard
       adFormat="rectangle"
       style={{ width: "336px", height: "280px" }}
       className="my-4 mx-auto"
@@ -106,7 +106,7 @@ export function ContentAd() {
 export function ResponsiveAd() {
   return (
     <AdSenseAd
-      adSlot="YOUR_AD_SLOT_ID" // Get this from AdSense dashboard
+      adSlot="1122334455" // Get this from AdSense dashboard
       adFormat="auto"
       style={{ minHeight: "200px" }}
       className="w-full my-4"
