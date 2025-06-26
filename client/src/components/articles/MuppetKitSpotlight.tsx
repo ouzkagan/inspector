@@ -1,12 +1,9 @@
-
 import React from "react";
+import PageLayout from '../PageLayout';
 
 const MuppetKitSpotlight: React.FC = () => {
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Muppet Kit: A New Collection of MCP Tools</h1>
-      <p className="text-sm text-muted-foreground mb-6">Published on June 26, 2025</p>
-
+    <PageLayout title="Muppet Kit: A New Collection of MCP Tools">
       <p className="mb-4">The MCP ecosystem continues to flourish with new and innovative tools from the developer community. <strong>Muppet Kit</strong> is another noteworthy project, offering a suite of tools designed for testing and debugging MCP servers.</p>
 
       <p className="mb-4">Inspired by the official MCP Inspector, Muppet Kit aims to provide a comprehensive toolkit for developers, deployable with a single command or via Cloudflare.</p>
@@ -15,8 +12,8 @@ const MuppetKitSpotlight: React.FC = () => {
       <p className="mb-4">Muppet Kit is more than just an inspector; it's a collection of specialized tools, each targeting a different aspect of the development and testing workflow:</p>
       <ul className="list-disc list-inside mb-4 pl-4">
         <li className="mb-2"><strong>Explorer:</strong> Explore an MCP server's capabilities with AI-powered assistance.</li>
-        <li className="mb-2"><strong>Playground:</strong> Test your server with various LLMs and configurations to see how it behaves.</li>
-        <li className="mb-2"><strong>MCP Scan:</strong> A dedicated tool for scanning your MCP server for potential vulnerabilities and security issues.</li>
+        <li className="mb-2"><strong>Playground:</b> Test your server with various LLMs and configurations.</li>
+        <li className="mb-2"><strong>MCP Scan:</strong> A dedicated tool for scanning your MCP server for vulnerabilities and security issues.</li>
         <li className="mb-2"><strong>Tracing:</strong> Trace requests and responses between client and server, with support for tunneling to remote clients.</li>
         <li className="mb-2"><strong>History:</strong> A session-based history of all requests and responses.</li>
       </ul>
@@ -39,7 +36,7 @@ const MuppetKitSpotlight: React.FC = () => {
 
       <h2 className="text-2xl font-bold mt-6 mb-4">A Growing Community Effort</h2>
       <p className="mb-4">Like other community tools, Muppet Kit demonstrates the collaborative spirit of the MCP ecosystem. By building on the ideas of the original inspector and adding new capabilities like security scanning and a dedicated playground, it provides developers with more powerful and specialized tools for building robust MCP applications.</p>
-    </div>
+    </PageLayout>
   );
 };
 

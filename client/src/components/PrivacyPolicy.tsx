@@ -1,9 +1,10 @@
+
 import React from 'react';
+import PageLayout from './PageLayout';
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="p-4 max-w-4xl mx-auto bg-background text-foreground">
-      <h1 className="text-3xl font-bold mb-4">Privacy Policy for Online MCP Inspector</h1>
+    <PageLayout title="Privacy Policy for Online MCP Inspector">
       <p className="mb-4">
         This Privacy Policy outlines how Online MCP Inspector collects, uses, maintains, and discloses information collected from users (each, a "User") of the <a href="https://onlinemcpinspector.com" className="text-blue-500 hover:underline">onlinemcpinspector.com</a> website ("Site"). This policy applies to the Site and all products and services offered by Online MCP Inspector.
       </p>
@@ -64,7 +65,7 @@ const PrivacyPolicy: React.FC = () => {
       </p>
 
       <p className="text-sm text-muted-foreground mt-8">This document was last updated on June 26, 2025.</p>
-    </div>
+    </PageLayout>
   );
 };
 

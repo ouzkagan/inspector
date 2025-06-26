@@ -1,13 +1,10 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
+import PageLayout from '../PageLayout';
 
 const DebuggingErrors: React.FC = () => {
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Debugging Common MCP Server Errors</h1>
-      <p className="text-sm text-muted-foreground mb-6">Published on June 26, 2025</p>
-
+    <PageLayout title="Debugging Common MCP Server Errors">
       <p className="mb-4">Developing and integrating with MCP servers can sometimes lead to unexpected issues. The MCP Inspector is your primary tool for diagnosing these problems. Here are some common errors you might encounter and how to debug them effectively.</p>
 
       <h2 className="text-2xl font-bold mt-6 mb-4">Connection Errors</h2>
@@ -33,7 +30,7 @@ const DebuggingErrors: React.FC = () => {
       <p className="mb-4">When you call a tool, you might receive an error message in the tool result pane. These errors typically originate from your MCP server's implementation of the tool.</p>
       <ul className="list-disc list-inside mb-4 pl-4">
         <li className="mb-2"><strong>Missing/Invalid Parameters:</strong> You might be calling the tool with incorrect or missing arguments. The inspector will often highlight these if the server provides good error messages.</li>
-        <li className="mb-2"><strong>Internal Server Logic Errors:</strong> The tool's underlying code on your server might have a bug, leading to an unhandled exception.</li>
+        <li className="mb-2"><strong>Internal Server Logic Errors:</b> The tool's underlying code on your server might have a bug, leading to an unhandled exception.</li>
         <li className="mb-2"><strong>External Service Failure:</strong> If your tool relies on an external API, that service might be down or returning an error.</li>
       </ul>
       <p className="mb-4"><strong>Debugging Tip:</strong> The inspector will display the error message returned by your server. Pay close attention to this message. If it's generic, you'll need to examine your server's logs for more detailed stack traces or error information. Ensure your tool implementations handle edge cases and validate input.</p>
@@ -46,7 +43,7 @@ const DebuggingErrors: React.FC = () => {
       </ul>
 
       <p className="mb-4">By systematically checking these areas and leveraging the inspector's features, you can efficiently identify and resolve issues in your MCP server implementations. For a general overview of how to use the inspector, see our <Link to="/articles/how-to-use-inspector" className="text-blue-500 hover:underline">How to Use the MCP Inspector</Link> guide.</p>
-    </div>
+    </PageLayout>
   );
 };
 

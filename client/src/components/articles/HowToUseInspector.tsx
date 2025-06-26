@@ -1,13 +1,10 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
+import PageLayout from '../PageLayout';
 
 const HowToUseInspector: React.FC = () => {
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">How to Use the MCP Inspector: A Testing Tool for MCP Servers</h1>
-      <p className="text-sm text-muted-foreground mb-6">Published on June 26, 2025</p>
-
+    <PageLayout title="How to Use the MCP Inspector: A Testing Tool for MCP Servers">
       <p className="mb-4">The MCP Inspector is an indispensable tool for developers working with the Model Context Protocol. It provides a visual interface to test, debug, and understand the capabilities of your MCP servers. This guide will walk you through the essential steps to get started.</p>
 
       <h2 className="text-2xl font-bold mt-6 mb-4">1. Launching Your MCP Server</h2>
@@ -53,7 +50,7 @@ const HowToUseInspector: React.FC = () => {
 
       <h3 className="text-xl font-bold mt-4 mb-2">Tools Tab</h3>
       <p className="mb-4">Call the tools exposed by your MCP server. This is crucial for testing the functionality that your AI model will leverage.</p>
-      <p className="mb-4">[**Screenshot Placeholder:** Image of the Tools tab with a tool selected, parameters entered, and result displayed]</p>
+      {/* <p className="mb-4">[**Screenshot Placeholder:** Image of the Tools tab with a tool selected, parameters entered, and result displayed]</p> */}
       <p className="mb-4">Enter the required parameters for a tool and click "Call Tool" to see the response. The inspector will display the output, including any errors.</p>
 
       <h2 className="text-2xl font-bold mt-6 mb-4">4. Debugging and Monitoring</h2>
@@ -66,7 +63,7 @@ const HowToUseInspector: React.FC = () => {
 
       <h2 className="text-2xl font-bold mt-6 mb-4">Conclusion</h2>
       <p className="mb-4">The MCP Inspector simplifies the process of developing and testing MCP servers. By providing a clear, interactive interface, it helps you ensure your server is behaving as expected. Happy inspecting!</p>
-    </div>
+    </PageLayout>
   );
 };
 

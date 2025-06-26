@@ -1,13 +1,14 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
+import PageLayout from '../PageLayout';
 
 const WhatIsMcp: React.FC = () => {
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">What is the Model Context Protocol (MCP)?</h1>
-      <p className="text-sm text-muted-foreground mb-6">Published on June 26, 2025</p>
-
-      <p className="mb-4">The Model Context Protocol (MCP) is a groundbreaking specification designed to standardize communication between AI models and the tools they interact with. Think of it as a universal language that allows AI to understand and utilize external functionalities, making AI applications more powerful and versatile.</p>
+    <PageLayout title="What is the Model Context Protocol (MCP)?">
+      <p className="mb-4">
+        The Model Context Protocol (MCP) is a groundbreaking specification designed to standardize communication between AI models and the tools they interact with. Think of it as a universal language that allows AI to understand and utilize external functionalities, making AI applications more powerful and versatile.
+      </p>
 
       <h2 className="text-2xl font-bold mt-6 mb-4">Why MCP Matters: Bridging AI and Tools</h2>
       <p className="mb-4">In the rapidly evolving landscape of AI, models often need to perform actions beyond their inherent capabilities, such as fetching real-time data, executing code, or interacting with external services. MCP provides a structured way for models to:</p>
@@ -34,7 +35,7 @@ const WhatIsMcp: React.FC = () => {
       </ul>
 
       <p className="mb-4">Understanding and implementing MCP is becoming crucial for developers building sophisticated AI solutions. To test your own MCP servers, check out our <Link to="/articles/how-to-use-inspector" className="text-blue-500 hover:underline">guide on using the MCP Inspector</Link>.</p>
-    </div>
+    </PageLayout>
   );
 };
 

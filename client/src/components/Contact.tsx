@@ -1,9 +1,10 @@
+
 import React from 'react';
+import PageLayout from './PageLayout';
 
 const Contact: React.FC = () => {
   return (
-    <div className="p-4 max-w-4xl mx-auto bg-background text-foreground">
-      <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
+    <PageLayout title="Contact Us">
       <p className="mb-4">
         We value your feedback, questions, and suggestions. Your input helps us improve the Online MCP Inspector and better serve the developer community. Please feel free to reach out to us through the following channels:
       </p>
@@ -35,7 +36,7 @@ const Contact: React.FC = () => {
       <p className="mb-4">
         Your contributions and engagement are highly appreciated and help us make the Online MCP Inspector even better!
       </p>
-    </div>
+    </PageLayout>
   );
 };
 

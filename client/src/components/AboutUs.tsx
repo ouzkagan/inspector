@@ -1,9 +1,10 @@
+
 import React from 'react';
+import PageLayout from './PageLayout';
 
 const AboutUs: React.FC = () => {
   return (
-    <div className="p-4 max-w-4xl mx-auto bg-background text-foreground">
-      <h1 className="text-3xl font-bold mb-4">About Us: Online MCP Inspector</h1>
+    <PageLayout title="About Us: Online MCP Inspector">
       <p className="mb-4">
         Welcome to the Online MCP Inspector, a dedicated platform designed to empower developers in testing and debugging Model Context Protocol (MCP) servers. Our mission is to provide a free, intuitive, and highly accessible tool that requires no installation, running seamlessly directly within your web browser.
       </p>
@@ -23,7 +24,7 @@ const AboutUs: React.FC = () => {
       <p className="mb-4">
         We are a dedicated team of developers passionate about the Model Context Protocol and committed to providing high-quality tools that simplify the development process. Your feedback and support are invaluable as we continue to evolve and enhance the Online MCP Inspector.
       </p>
-    </div>
+    </PageLayout>
   );
 };
 
