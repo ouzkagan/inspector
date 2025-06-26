@@ -20,7 +20,7 @@ const AboutThisSite: React.FC = () => {
       <h2 className="text-2xl font-bold mt-6 mb-4">Core Architecture</h2>
       <p className="mb-4">The inspector operates with two primary components working in tandem:</p>
       <ul className="list-disc list-inside mb-4 pl-4">
-        <li className="mb-2"><strong>Inspector Client (MCPI):</b> The interactive React-based web interface you are using right now.</li>
+        <li className="mb-2"><strong>Inspector Client (MCPI):</strong> The interactive React-based web interface you are using right now.</li>
         <li className="mb-2"><strong>Proxy Server (MCPP):</strong> A Node.js server that bridges this web UI to any MCP server via various transport methods like stdio, SSE, or streamable-http.</li>
       </ul>
 

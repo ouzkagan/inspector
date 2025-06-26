@@ -12,7 +12,7 @@ const MuppetKitSpotlight: React.FC = () => {
       <p className="mb-4">Muppet Kit is more than just an inspector; it's a collection of specialized tools, each targeting a different aspect of the development and testing workflow:</p>
       <ul className="list-disc list-inside mb-4 pl-4">
         <li className="mb-2"><strong>Explorer:</strong> Explore an MCP server's capabilities with AI-powered assistance.</li>
-        <li className="mb-2"><strong>Playground:</b> Test your server with various LLMs and configurations.</li>
+        <li className="mb-2"><strong>Playground:</strong> Test your server with various LLMs and configurations.</li>
         <li className="mb-2"><strong>MCP Scan:</strong> A dedicated tool for scanning your MCP server for vulnerabilities and security issues.</li>
         <li className="mb-2"><strong>Tracing:</strong> Trace requests and responses between client and server, with support for tunneling to remote clients.</li>
         <li className="mb-2"><strong>History:</strong> A session-based history of all requests and responses.</li>

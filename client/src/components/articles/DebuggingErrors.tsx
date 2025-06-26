@@ -30,7 +30,7 @@ const DebuggingErrors: React.FC = () => {
       <p className="mb-4">When you call a tool, you might receive an error message in the tool result pane. These errors typically originate from your MCP server's implementation of the tool.</p>
       <ul className="list-disc list-inside mb-4 pl-4">
         <li className="mb-2"><strong>Missing/Invalid Parameters:</strong> You might be calling the tool with incorrect or missing arguments. The inspector will often highlight these if the server provides good error messages.</li>
-        <li className="mb-2"><strong>Internal Server Logic Errors:</b> The tool's underlying code on your server might have a bug, leading to an unhandled exception.</li>
+        <li className="mb-2"><strong>Internal Server Logic Errors:</strong> The tool's underlying code on your server might have a bug, leading to an unhandled exception.</li>
         <li className="mb-2"><strong>External Service Failure:</strong> If your tool relies on an external API, that service might be down or returning an error.</li>
       </ul>
       <p className="mb-4"><strong>Debugging Tip:</strong> The inspector will display the error message returned by your server. Pay close attention to this message. If it's generic, you'll need to examine your server's logs for more detailed stack traces or error information. Ensure your tool implementations handle edge cases and validate input.</p>
