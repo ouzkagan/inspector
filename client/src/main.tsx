@@ -22,6 +22,14 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
+    path: "/oauth/callback",
+    element: <App />,
+  },
+  {
+    path: "/oauth/callback/debug",
+    element: <App />,
+  },
+  {
     path: "/about",
     element: <AboutUs />,
   },
