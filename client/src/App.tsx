@@ -986,6 +986,32 @@ const App = () => {
           </div>
         </div>
       </div>
+      <footer className="flex justify-center p-4 border-t border-border">
+        <a
+          href="/about"
+          className="text-sm text-muted-foreground hover:text-foreground"
+        >
+          About
+        </a>
+        <a
+          href="/contact"
+          className="ml-4 text-sm text-muted-foreground hover:text-foreground"
+        >
+          Contact
+        </a>
+        <a
+          href="/privacy"
+          className="ml-4 text-sm text-muted-foreground hover:text-foreground"
+        >
+          Privacy Policy
+        </a>
+        <a
+          href="/guides"
+          className="ml-4 text-sm text-muted-foreground hover:text-foreground"
+        >
+          Guides
+        </a>
+      </footer>
     </>
   );
 };
