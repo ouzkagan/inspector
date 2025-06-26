@@ -1,3 +1,4 @@
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -11,6 +12,9 @@ import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import WhatIsMcp from "./components/articles/WhatIsMcp.tsx";
 import HowToUseInspector from "./components/articles/HowToUseInspector.tsx";
 import DebuggingErrors from "./components/articles/DebuggingErrors.tsx";
+import AboutThisSite from "./components/articles/AboutThisSite.tsx";
+import MuppetKitSpotlight from "./components/articles/MuppetKitSpotlight.tsx";
+import McpInspectorToolsGuide from "./components/articles/McpInspectorToolsGuide.tsx";
 import Guides from "./components/Guides.tsx";
 
 const router = createBrowserRouter([
@@ -45,6 +49,18 @@ const router = createBrowserRouter([
   {
     path: "/articles/debugging-errors",
     element: <DebuggingErrors />,
+  },
+  {
+    path: "/articles/about-this-site",
+    element: <AboutThisSite />,
+  },
+  {
+    path: "/articles/muppet-kit-spotlight",
+    element: <MuppetKitSpotlight />,
+  },
+  {
+    path: "/articles/mcp-inspector-tools-guide",
+    element: <McpInspectorToolsGuide />,
   },
 ]);
 
