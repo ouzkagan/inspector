@@ -627,7 +627,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <div className="app-container w-full h-screen">
       {/* SEO and Performance Components */}
       <SEOHead />
       <PerformanceOptimizer />
@@ -635,7 +635,7 @@ const App = () => {
       {/* Google AdSense Script */}
       <GoogleAds adClientId="ca-pub-5649332072305685" />
 
-      <div className="flex h-screen bg-background">
+      <div className="flex h-screen bg-background w-full max-w-none">
         <div
           style={{
             width: sidebarWidth,
@@ -643,7 +643,7 @@ const App = () => {
             maxWidth: 800,
             transition: isSidebarDragging ? "none" : "width 0.15s",
           }}
-          className="bg-card border-r border-border flex flex-col h-full relative p-4"
+          className="bg-card border-r border-border flex flex-col h-full relative p-4 min-w-0"
         >
           <Sidebar
             connectionStatus={connectionStatus}
@@ -701,19 +701,18 @@ const App = () => {
           />
         </div>
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-auto p-6">
-            {mcpClient ? (
-              <>
-                {/* Header Ad Zone */}
-                <div className="p-4 border-b border-border bg-background">
-                  <AdSenseAd
-                    adSlot="4434346634"
-                    adFormat="horizontal"
-                    style={{ maxHeight: "90px" }}
-                    className="w-full max-w-4xl mx-auto"
-                  />
-                </div>
+          {/* Header Ad Zone - Move to top and remove width constraints */}
+          <div className="border-b border-border bg-background">
+            <AdSenseAd
+              adSlot="4434346634"
+              adFormat="horizontal"
+              style={{ maxHeight: "90px" }}
+              className="w-full"
+            />
+          </div>
 
+          <div className="flex-1 overflow-auto p-2">
+            {mcpClient ? (
                 <Tabs
                   defaultValue={
                     Object.keys(serverCapabilities ?? {}).includes(
@@ -728,10 +727,10 @@ const App = () => {
                             ? "tools"
                             : "ping"
                   }
-                  className="w-full p-4"
+                  className="w-full h-full"
                   onValueChange={(value) => (window.location.hash = value)}
                 >
-                  <TabsList className="mb-4 py-2 px-1 text-lg">
+                  <TabsList className="mb-2 py-2 px-1 text-lg w-full">
                     <TabsTrigger
                       value="resources"
                       disabled={!serverCapabilities?.resources}
@@ -776,7 +775,7 @@ const App = () => {
                     </TabsTrigger>
                   </TabsList>
 
-                  <div className="w-full">
+                  <div className="w-full h-full">
                     {!serverCapabilities?.resources &&
                     !serverCapabilities?.prompts &&
                     !serverCapabilities?.tools ? (
@@ -926,11 +925,10 @@ const App = () => {
                     )}
                   </div>
                 </Tabs>
-              </>
             ) : isAuthDebuggerVisible ? (
               <Tabs
                 defaultValue={"auth"}
-                className="w-full p-4"
+                className="w-full h-full"
                 onValueChange={(value) => (window.location.hash = value)}
               >
                 <AuthDebuggerWrapper />
@@ -973,8 +971,8 @@ const App = () => {
                 serverNotifications={notifications}
               />
 
-              {/* Footer Ad Zone */}
-              <div className="p-4 border-t border-border bg-background">
+              {/* Footer Ad Zone - Remove padding */}
+              <div className="border-t border-border bg-background">
                 <AdSenseAd
                   adSlot="6618506909"
                   adFormat="horizontal"
@@ -986,7 +984,9 @@ const App = () => {
           </div>
         </div>
       </div>
-      <footer className="flex justify-center p-4 border-t border-border">
+      
+      {/* Move footer outside main layout and reduce padding */}
+      <footer className="flex justify-center p-2 border-t border-border bg-background">
         <a
           href="/about"
           className="text-sm text-muted-foreground hover:text-foreground"
@@ -1012,7 +1012,7 @@ const App = () => {
           Guides
         </a>
       </footer>
-    </>
+    </div>
   );
 };
 
