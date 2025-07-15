@@ -49,8 +49,12 @@ import {
   FolderTree,
   Hammer,
   Hash,
+  Info,
   Key,
+  Menu,
   MessageSquare,
+  MoreHorizontal,
+  X,
 } from "lucide-react";
 
 import { z } from "zod";
@@ -130,6 +134,7 @@ const App = () => {
     >
   >([]);
   const [isAuthDebuggerVisible, setIsAuthDebuggerVisible] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(true);
 
   // Auth debugger state
   const [authState, setAuthState] =
@@ -635,16 +640,38 @@ const App = () => {
       {/* Google AdSense Script */}
       <GoogleAds adClientId="ca-pub-5649332072305685" />
 
-      <div className="flex h-screen bg-background w-full max-w-none">
+      <div className="flex h-screen bg-background w-full max-w-none lg:flex">
+        {/* Mobile overlay */}
+        {isMobileSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+            onClick={() => setIsMobileSidebarOpen(false)}
+          />
+        )}
+
         <div
           style={{
-            width: sidebarWidth,
-            minWidth: 250,
-            maxWidth: 800,
+            width: window.innerWidth >= 1024 ? sidebarWidth : "100%",
+            minWidth: window.innerWidth >= 1024 ? 250 : "auto",
+            maxWidth: window.innerWidth >= 1024 ? 800 : "none",
             transition: isSidebarDragging ? "none" : "width 0.15s",
           }}
-          className="bg-card border-r border-border flex flex-col h-full relative p-4 min-w-0"
+          className={`bg-card border-r border-border flex flex-col h-full relative p-4 
+            ${!isMobileSidebarOpen ? "hidden lg:flex" : "flex"} 
+            fixed lg:relative z-50 lg:z-auto w-full lg:w-auto`}
         >
+          {/* Mobile close button inside sidebar */}
+          <div className="lg:hidden flex justify-end mb-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMobileSidebarOpen(false)}
+              className="p-2"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+
           <Sidebar
             connectionStatus={connectionStatus}
             transportType={transportType}
@@ -672,16 +699,49 @@ const App = () => {
             clearStdErrNotifications={clearStdErrNotifications}
           />
 
-          {/* Sidebar Ad Zone */}
-          <div className="p-4 border-t border-border">
-            <AdSenseAd
-              adSlot="4968699101"
-              adFormat="auto"
-              style={{ minHeight: "250px" }}
-              className="w-full"
-            />
+          {/* Information Links - Always visible */}
+          <div className="p-4 border-t border-border space-y-2">
+            <h3 className="text-sm font-semibold mb-2">Information</h3>
+            <div className="space-y-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.open("/about", "_blank")}
+                className="w-full justify-start text-xs"
+              >
+                <Info className="h-3 w-3 mr-2" />
+                About
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.open("/guides", "_blank")}
+                className="w-full justify-start text-xs"
+              >
+                <MoreHorizontal className="h-3 w-3 mr-2" />
+                Guides
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.open("/contact", "_blank")}
+                className="w-full justify-start text-xs"
+              >
+                <MessageSquare className="h-3 w-3 mr-2" />
+                Contact
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.open("/privacy", "_blank")}
+                className="w-full justify-start text-xs"
+              >
+                <Key className="h-3 w-3 mr-2" />
+                Privacy
+              </Button>
+            </div>
           </div>
-          {/* Drag handle for resizing sidebar */}
+
           <div
             onMouseDown={handleSidebarDragStart}
             style={{
@@ -696,235 +756,313 @@ const App = () => {
                 ? "rgba(0,0,0,0.08)"
                 : "transparent",
             }}
+            className="hidden lg:block"
             aria-label="Resize sidebar"
             data-testid="sidebar-drag-handle"
           />
         </div>
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Header Ad Zone - Move to top and remove width constraints */}
-          <div className="border-b border-border bg-background">
-            <AdSenseAd
-              adSlot="4434346634"
-              adFormat="horizontal"
-              style={{ maxHeight: "90px" }}
-              className="w-full"
-            />
+        <div
+          className={`flex-1 flex flex-col overflow-hidden ${!isMobileSidebarOpen ? "flex" : "hidden lg:flex"}`}
+        >
+          {/* Mobile header with toggle and navigation */}
+          <div className="lg:hidden flex items-center justify-between p-3 border-b border-border bg-background">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+              className="p-2"
+            >
+              {isMobileSidebarOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </Button>
+
+            {/* Mobile Navigation Tabs */}
+            {!isMobileSidebarOpen && mcpClient && (
+              <div className="flex gap-1 flex-1 justify-center">
+                <Button
+                  variant={
+                    window.location.hash === "#resources" ? "default" : "ghost"
+                  }
+                  size="sm"
+                  onClick={() => (window.location.hash = "resources")}
+                  disabled={!serverCapabilities?.resources}
+                  className="p-2"
+                >
+                  <Files className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={
+                    window.location.hash === "#prompts" ? "default" : "ghost"
+                  }
+                  size="sm"
+                  onClick={() => (window.location.hash = "prompts")}
+                  disabled={!serverCapabilities?.prompts}
+                  className="p-2"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={
+                    window.location.hash === "#tools" ? "default" : "ghost"
+                  }
+                  size="sm"
+                  onClick={() => (window.location.hash = "tools")}
+                  disabled={!serverCapabilities?.tools}
+                  className="p-2"
+                >
+                  <Hammer className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={
+                    window.location.hash === "#ping" ? "default" : "ghost"
+                  }
+                  size="sm"
+                  onClick={() => (window.location.hash = "ping")}
+                  className="p-2"
+                >
+                  <Bell className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
+
+            {isMobileSidebarOpen && (
+              <h1 className="text-lg font-semibold">MCP Inspector</h1>
+            )}
+            <div className="w-10"></div>
           </div>
 
-          <div className="flex-1 overflow-auto p-2">
+          <div className="flex-1 overflow-auto p-2 lg:p-2">
             {mcpClient ? (
-                <Tabs
-                  defaultValue={
-                    Object.keys(serverCapabilities ?? {}).includes(
-                      window.location.hash.slice(1),
-                    )
-                      ? window.location.hash.slice(1)
-                      : serverCapabilities?.resources
-                        ? "resources"
-                        : serverCapabilities?.prompts
-                          ? "prompts"
-                          : serverCapabilities?.tools
-                            ? "tools"
-                            : "ping"
-                  }
-                  className="w-full h-full"
-                  onValueChange={(value) => (window.location.hash = value)}
-                >
-                  <TabsList className="mb-2 py-2 px-1 text-lg w-full">
-                    <TabsTrigger
-                      value="resources"
-                      disabled={!serverCapabilities?.resources}
-                    >
-                      <Files className="w-5 h-5 mr-2" />
-                      Resources
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="prompts"
-                      disabled={!serverCapabilities?.prompts}
-                    >
-                      <MessageSquare className="w-5 h-5 mr-2" />
-                      Prompts
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="tools"
-                      disabled={!serverCapabilities?.tools}
-                    >
-                      <Hammer className="w-5 h-5 mr-2" />
-                      Tools
-                    </TabsTrigger>
-                    <TabsTrigger value="ping">
-                      <Bell className="w-5 h-5 mr-2" />
-                      Ping
-                    </TabsTrigger>
-                    <TabsTrigger value="sampling" className="relative">
-                      <Hash className="w-5 h-5 mr-2" />
-                      Sampling
-                      {pendingSampleRequests.length > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                          {pendingSampleRequests.length}
-                        </span>
-                      )}
-                    </TabsTrigger>
-                    <TabsTrigger value="roots">
-                      <FolderTree className="w-5 h-5 mr-2" />
-                      Roots
-                    </TabsTrigger>
-                    <TabsTrigger value="auth">
-                      <Key className="w-5 h-5 mr-2" />
-                      Auth
-                    </TabsTrigger>
-                  </TabsList>
-
-                  <div className="w-full h-full">
-                    {!serverCapabilities?.resources &&
-                    !serverCapabilities?.prompts &&
-                    !serverCapabilities?.tools ? (
-                      <>
-                        <div className="flex items-center justify-center p-4">
-                          <p className="text-lg text-gray-500 dark:text-gray-400">
-                            The connected server does not support any MCP
-                            capabilities
-                          </p>
-                        </div>
-                        <PingTab
-                          onPingClick={() => {
-                            void sendMCPRequest(
-                              {
-                                method: "ping" as const,
-                              },
-                              EmptyResultSchema,
-                            );
-                          }}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <ResourcesTab
-                          resources={resources}
-                          resourceTemplates={resourceTemplates}
-                          listResources={() => {
-                            clearError("resources");
-                            listResources();
-                          }}
-                          clearResources={() => {
-                            setResources([]);
-                            setNextResourceCursor(undefined);
-                          }}
-                          listResourceTemplates={() => {
-                            clearError("resources");
-                            listResourceTemplates();
-                          }}
-                          clearResourceTemplates={() => {
-                            setResourceTemplates([]);
-                            setNextResourceTemplateCursor(undefined);
-                          }}
-                          readResource={(uri) => {
-                            clearError("resources");
-                            readResource(uri);
-                          }}
-                          selectedResource={selectedResource}
-                          setSelectedResource={(resource) => {
-                            clearError("resources");
-                            setSelectedResource(resource);
-                          }}
-                          resourceSubscriptionsSupported={
-                            serverCapabilities?.resources?.subscribe || false
-                          }
-                          resourceSubscriptions={resourceSubscriptions}
-                          subscribeToResource={(uri) => {
-                            clearError("resources");
-                            subscribeToResource(uri);
-                          }}
-                          unsubscribeFromResource={(uri) => {
-                            clearError("resources");
-                            unsubscribeFromResource(uri);
-                          }}
-                          handleCompletion={handleCompletion}
-                          completionsSupported={completionsSupported}
-                          resourceContent={resourceContent}
-                          nextCursor={nextResourceCursor}
-                          nextTemplateCursor={nextResourceTemplateCursor}
-                          error={errors.resources}
-                        />
-                        <PromptsTab
-                          prompts={prompts}
-                          listPrompts={() => {
-                            clearError("prompts");
-                            listPrompts();
-                          }}
-                          clearPrompts={() => {
-                            setPrompts([]);
-                            setNextPromptCursor(undefined);
-                          }}
-                          getPrompt={(name, args) => {
-                            clearError("prompts");
-                            getPrompt(name, args);
-                          }}
-                          selectedPrompt={selectedPrompt}
-                          setSelectedPrompt={(prompt) => {
-                            clearError("prompts");
-                            setSelectedPrompt(prompt);
-                            setPromptContent("");
-                          }}
-                          handleCompletion={handleCompletion}
-                          completionsSupported={completionsSupported}
-                          promptContent={promptContent}
-                          nextCursor={nextPromptCursor}
-                          error={errors.prompts}
-                        />
-                        <ToolsTab
-                          tools={tools}
-                          listTools={() => {
-                            clearError("tools");
-                            listTools();
-                          }}
-                          clearTools={() => {
-                            setTools([]);
-                            setNextToolCursor(undefined);
-                            // Clear cached output schemas
-                            cacheToolOutputSchemas([]);
-                          }}
-                          callTool={async (name, params) => {
-                            clearError("tools");
-                            setToolResult(null);
-                            await callTool(name, params);
-                          }}
-                          selectedTool={selectedTool}
-                          setSelectedTool={(tool) => {
-                            clearError("tools");
-                            setSelectedTool(tool);
-                            setToolResult(null);
-                          }}
-                          toolResult={toolResult}
-                          nextCursor={nextToolCursor}
-                          error={errors.tools}
-                        />
-                        <ConsoleTab />
-                        <PingTab
-                          onPingClick={() => {
-                            void sendMCPRequest(
-                              {
-                                method: "ping" as const,
-                              },
-                              EmptyResultSchema,
-                            );
-                          }}
-                        />
-                        <SamplingTab
-                          pendingRequests={pendingSampleRequests}
-                          onApprove={handleApproveSampling}
-                          onReject={handleRejectSampling}
-                        />
-                        <RootsTab
-                          roots={roots}
-                          setRoots={setRoots}
-                          onRootsChange={handleRootsChange}
-                        />
-                        <AuthDebuggerWrapper />
-                      </>
+              <Tabs
+                defaultValue={
+                  Object.keys(serverCapabilities ?? {}).includes(
+                    window.location.hash.slice(1),
+                  )
+                    ? window.location.hash.slice(1)
+                    : serverCapabilities?.resources
+                      ? "resources"
+                      : serverCapabilities?.prompts
+                        ? "prompts"
+                        : serverCapabilities?.tools
+                          ? "tools"
+                          : "ping"
+                }
+                className="w-full h-full"
+                onValueChange={(value) => (window.location.hash = value)}
+              >
+                <TabsList className="mb-2 py-2 px-1 text-sm lg:text-lg w-full flex-wrap lg:flex-nowrap gap-1">
+                  <TabsTrigger
+                    value="resources"
+                    disabled={!serverCapabilities?.resources}
+                    className="text-xs lg:text-sm px-2 lg:px-3"
+                  >
+                    <Files className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
+                    <span className="hidden sm:inline">Resources</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="prompts"
+                    disabled={!serverCapabilities?.prompts}
+                    className="text-xs lg:text-sm px-2 lg:px-3"
+                  >
+                    <MessageSquare className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
+                    <span className="hidden sm:inline">Prompts</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="tools"
+                    disabled={!serverCapabilities?.tools}
+                    className="text-xs lg:text-sm px-2 lg:px-3"
+                  >
+                    <Hammer className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
+                    <span className="hidden sm:inline">Tools</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="ping"
+                    className="text-xs lg:text-sm px-2 lg:px-3"
+                  >
+                    <Bell className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
+                    <span className="hidden sm:inline">Ping</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="sampling"
+                    className="relative text-xs lg:text-sm px-2 lg:px-3"
+                  >
+                    <Hash className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
+                    <span className="hidden sm:inline">Sampling</span>
+                    {pendingSampleRequests.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                        {pendingSampleRequests.length}
+                      </span>
                     )}
-                  </div>
-                </Tabs>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="roots"
+                    className="text-xs lg:text-sm px-2 lg:px-3"
+                  >
+                    <FolderTree className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
+                    <span className="hidden sm:inline">Roots</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="auth"
+                    className="text-xs lg:text-sm px-2 lg:px-3"
+                  >
+                    <Key className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
+                    <span className="hidden sm:inline">Auth</span>
+                  </TabsTrigger>
+                </TabsList>
+
+                <div className="w-full h-full">
+                  {!serverCapabilities?.resources &&
+                  !serverCapabilities?.prompts &&
+                  !serverCapabilities?.tools ? (
+                    <>
+                      <div className="flex items-center justify-center p-4">
+                        <p className="text-lg text-gray-500 dark:text-gray-400">
+                          The connected server does not support any MCP
+                          capabilities
+                        </p>
+                      </div>
+                      <PingTab
+                        onPingClick={() => {
+                          void sendMCPRequest(
+                            {
+                              method: "ping" as const,
+                            },
+                            EmptyResultSchema,
+                          );
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <ResourcesTab
+                        resources={resources}
+                        resourceTemplates={resourceTemplates}
+                        listResources={() => {
+                          clearError("resources");
+                          listResources();
+                        }}
+                        clearResources={() => {
+                          setResources([]);
+                          setNextResourceCursor(undefined);
+                        }}
+                        listResourceTemplates={() => {
+                          clearError("resources");
+                          listResourceTemplates();
+                        }}
+                        clearResourceTemplates={() => {
+                          setResourceTemplates([]);
+                          setNextResourceTemplateCursor(undefined);
+                        }}
+                        readResource={(uri) => {
+                          clearError("resources");
+                          readResource(uri);
+                        }}
+                        selectedResource={selectedResource}
+                        setSelectedResource={(resource) => {
+                          clearError("resources");
+                          setSelectedResource(resource);
+                        }}
+                        resourceSubscriptionsSupported={
+                          serverCapabilities?.resources?.subscribe || false
+                        }
+                        resourceSubscriptions={resourceSubscriptions}
+                        subscribeToResource={(uri) => {
+                          clearError("resources");
+                          subscribeToResource(uri);
+                        }}
+                        unsubscribeFromResource={(uri) => {
+                          clearError("resources");
+                          unsubscribeFromResource(uri);
+                        }}
+                        handleCompletion={handleCompletion}
+                        completionsSupported={completionsSupported}
+                        resourceContent={resourceContent}
+                        nextCursor={nextResourceCursor}
+                        nextTemplateCursor={nextResourceTemplateCursor}
+                        error={errors.resources}
+                      />
+                      <PromptsTab
+                        prompts={prompts}
+                        listPrompts={() => {
+                          clearError("prompts");
+                          listPrompts();
+                        }}
+                        clearPrompts={() => {
+                          setPrompts([]);
+                          setNextPromptCursor(undefined);
+                        }}
+                        getPrompt={(name, args) => {
+                          clearError("prompts");
+                          getPrompt(name, args);
+                        }}
+                        selectedPrompt={selectedPrompt}
+                        setSelectedPrompt={(prompt) => {
+                          clearError("prompts");
+                          setSelectedPrompt(prompt);
+                          setPromptContent("");
+                        }}
+                        handleCompletion={handleCompletion}
+                        completionsSupported={completionsSupported}
+                        promptContent={promptContent}
+                        nextCursor={nextPromptCursor}
+                        error={errors.prompts}
+                      />
+                      <ToolsTab
+                        tools={tools}
+                        listTools={() => {
+                          clearError("tools");
+                          listTools();
+                        }}
+                        clearTools={() => {
+                          setTools([]);
+                          setNextToolCursor(undefined);
+                          // Clear cached output schemas
+                          cacheToolOutputSchemas([]);
+                        }}
+                        callTool={async (name, params) => {
+                          clearError("tools");
+                          setToolResult(null);
+                          await callTool(name, params);
+                        }}
+                        selectedTool={selectedTool}
+                        setSelectedTool={(tool) => {
+                          clearError("tools");
+                          setSelectedTool(tool);
+                          setToolResult(null);
+                        }}
+                        toolResult={toolResult}
+                        nextCursor={nextToolCursor}
+                        error={errors.tools}
+                      />
+                      <ConsoleTab />
+                      <PingTab
+                        onPingClick={() => {
+                          void sendMCPRequest(
+                            {
+                              method: "ping" as const,
+                            },
+                            EmptyResultSchema,
+                          );
+                        }}
+                      />
+                      <SamplingTab
+                        pendingRequests={pendingSampleRequests}
+                        onApprove={handleApproveSampling}
+                        onReject={handleRejectSampling}
+                      />
+                      <RootsTab
+                        roots={roots}
+                        setRoots={setRoots}
+                        onRootsChange={handleRootsChange}
+                      />
+                      <AuthDebuggerWrapper />
+                    </>
+                  )}
+                </div>
+              </Tabs>
             ) : isAuthDebuggerVisible ? (
               <Tabs
                 defaultValue={"auth"}
@@ -954,7 +1092,7 @@ const App = () => {
             )}
           </div>
           <div
-            className="relative border-t border-border"
+            className="relative border-t border-border hidden lg:block"
             style={{
               height: `${historyPaneHeight}px`,
             }}
@@ -984,7 +1122,7 @@ const App = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Move footer outside main layout and reduce padding */}
       <footer className="flex justify-center p-2 border-t border-border bg-background">
         <a
